@@ -9,10 +9,11 @@ def get_path(dir_path, *args):
 
 def run_command(command):
     try:
-        result = subprocess.run(command, check=True, text=True, capture_output=True)
+        result = subprocess.run(command, check=True, text=True, capture_output=False)
         logging.info(result.stdout)
     except subprocess.CalledProcessError as e:
         logging.error(f"Command '{' '.join(command)}' failed with error:\n{e}\nOutput:\n{e.output}")
+        exit(e.returncode)
 
 def move_files(source, destination):
     if os.path.exists(source):

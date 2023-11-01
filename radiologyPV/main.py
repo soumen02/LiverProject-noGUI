@@ -284,8 +284,10 @@ def main():
 
     home = str(Path.home())
 
-    # dynamically take the path of the studies folder as current directory/StudiesPV
-    studies = "/home/mri/soumen_fall2023/LiverApp_noGUI/StudiesPV"
+    app_dir = os.path.dirname(__file__)
+    app_dir = os.path.dirname(app_dir)
+    
+    studies = os.path.join(app_dir, "StudiesPV")
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-s", "--studies", default=studies)
@@ -294,7 +296,6 @@ def main():
 
     args = parser.parse_args()
 
-    app_dir = os.path.dirname(__file__)
     studies = args.studies
     conf = {
         "models": args.model,
