@@ -14,9 +14,9 @@ resultsHV = dir_path + "/StudiesHV/test_labels"
 
 outputfolder = dir_path + "/Output"
 
-mainHA = dir_path + "radiologyHA/main.py"
-mainPV = dir_path + "radiologyPV/main.py"
-mainHV = dir_path + "radiologyHV/main.py"
+mainHA = dir_path + "/radiologyHA/main.py"
+mainPV = dir_path + "/radiologyPV/main.py"
+mainHV = dir_path + "/radiologyHV/main.py"
 
 # run the three main files in sequence and wait for each to finish, also save the output in a log file while printing on the terminal
 os.system("python3 " + mainHA)
