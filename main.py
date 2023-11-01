@@ -1,18 +1,22 @@
 import os
 
-studiesHA = "/home/mri/soumen_fall2023/LiverApp_noGUI/StudiesHA"
-studiesPV = "/home/mri/soumen_fall2023/LiverApp_noGUI/StudiesPV"
-studiesHV = "/home/mri/soumen_fall2023/LiverApp_noGUI/StudiesHV"
+# find the directory of the current file and store it in a variable
 
-resultsHA = "/home/mri/soumen_fall2023/LiverApp_noGUI/StudiesPV/test_labels"
-resultsPV = "/home/mri/soumen_fall2023/LiverApp_noGUI/StudiesHA/test_labels"
-resultsHV = "/home/mri/soumen_fall2023/LiverApp_noGUI/StudiesHV/test_labels"
+dir_path = os.path.dirname(os.path.realpath(__file__))
 
-outputfolder = "/home/mri/soumen_fall2023/LiverApp_noGUI/Output"
+studiesHA = dir_path + "/StudiesHA" 
+studiesPV = dir_path + "/StudiesPV"
+studiesHV = dir_path + "/StudiesHV"
 
-mainHA = "/home/mri/soumen_fall2023/LiverApp_noGUI/radiologyHA/main.py"
-mainPV = "/home/mri/soumen_fall2023/LiverApp_noGUI/radiologyPV/main.py"
-mainHV = "/home/mri/soumen_fall2023/LiverApp_noGUI/radiologyHV/main.py"
+resultsHA = dir_path + "/StudiesHA/test_labels"
+resultsPV = dir_path + "/StudiesPV/test_labels"
+resultsHV = dir_path + "/StudiesHV/test_labels"
+
+outputfolder = dir_path + "/Output"
+
+mainHA = dir_path + "radiologyHA/main.py"
+mainPV = dir_path + "radiologyPV/main.py"
+mainHV = dir_path + "radiologyHV/main.py"
 
 # run the three main files in sequence and wait for each to finish, also save the output in a log file while printing on the terminal
 os.system("python3 " + mainHA)
@@ -40,4 +44,4 @@ if os.system("which slicer") == 0:
 else:
     print("Slicer is not installed")
 
-    
+
