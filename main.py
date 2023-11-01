@@ -12,7 +12,7 @@ def run_command(command):
         result = subprocess.run(command, check=True, text=True, capture_output=True)
         logging.info(result.stdout)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command '{command}' failed with error: {e}")
+        logging.error(f"Command '{' '.join(command)}' failed with error:\n{e}\nOutput:\n{e.output}")
 
 def move_files(source, destination):
     if os.path.exists(source):
