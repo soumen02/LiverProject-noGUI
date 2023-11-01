@@ -1,3 +1,7 @@
 *.nii.gz
 *.dcm
 *.pyc
+script.log
+StudiesHA/*.json
+StudiesHV/*.json
+StudiesPV/*.json

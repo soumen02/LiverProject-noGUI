@@ -2,18 +2,28 @@ import os
 import subprocess
 import logging
 
-logging.basicConfig(level=logging.INFO)
+# Configure logging
+dir_path = os.path.dirname(os.path.realpath(__file__))
+log_file = os.path.join(dir_path, 'script.log')
+logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', filemode='a')
 
 def get_path(dir_path, *args):
     return os.path.join(dir_path, *args)
 
 def run_command(command):
     try:
-        result = subprocess.run(command, check=True, text=True, capture_output=False)
-        logging.info(result.stdout)
-    except subprocess.CalledProcessError as e:
-        logging.error(f"Command '{' '.join(command)}' failed with error:\n{e}\nOutput:\n{e.output}")
-        exit(e.returncode)
+        with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) as proc:
+            stdout, stderr = proc.communicate()
+            if stdout:
+                logging.info(stdout)
+            if stderr:
+                logging.error(stderr)
+            if proc.returncode != 0:
+                logging.error(f"Command '{' '.join(command)}' failed with error code: {proc.returncode}")
+                exit(proc.returncode)
+    except Exception as e:
+        logging.error(f"Error executing command '{' '.join(command)}': {e}")
+        exit(1)
 
 def move_files(source, destination):
     if os.path.exists(source):

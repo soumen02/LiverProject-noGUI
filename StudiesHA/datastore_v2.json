@@ -4,12 +4,12 @@
   "images_dir": ".",
   "labels_dir": "labels",
   "objects": {
-    "10153545_HA-PVreg": {
+    "ArterialLiver": {
       "image": {
         "ext": ".nii.gz",
         "info": {
-          "ts": 1697107314,
-          "name": "10153545_HA-PVreg.nii.gz"
+          "ts": 1698834294,
+          "name": "ArterialLiver.nii.gz"
         }
       },
       "labels": {}
