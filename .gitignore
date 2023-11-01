@@ -1,2 +1,3 @@
 *.nii.gz
 *.dcm
+*.pyc
