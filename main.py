@@ -31,3 +31,13 @@ files = os.listdir(outputfolder)
 for file in files:
     print(file)
     os.system("fslstats " + outputfolder + "/" + file + " -V")
+
+# Check if slicer is installed on the computer using which slicer command
+# if slicer is installed then open both input files and output files in slicer using slicer command in the terminal 
+# else print that slicer is not installed
+if os.system("which slicer") == 0:
+    os.system("slicer " + studiesHA + "/* " + studiesPV + "/* " + studiesHV + "/* " + outputfolder + "/*")
+else:
+    print("Slicer is not installed")
+
+    
