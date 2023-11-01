@@ -4,7 +4,7 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
-def get_path(*args):
+def get_path(dir_path, *args):
     return os.path.join(dir_path, *args)
 
 def run_command(command):
@@ -22,17 +22,18 @@ def main():
     dir_path = os.path.dirname(os.path.realpath(__file__))
 
     paths = {
-        "studiesHA": get_path("StudiesHA"),
-        "studiesPV": get_path("StudiesPV"),
-        "studiesHV": get_path("StudiesHV"),
-        "resultsHA": get_path("StudiesHA", "test_labels"),
-        "resultsPV": get_path("StudiesPV", "test_labels"),
-        "resultsHV": get_path("StudiesHV", "test_labels"),
-        "outputfolder": get_path("Output"),
-        "mainHA": get_path("radiologyHA", "main.py"),
-        "mainPV": get_path("radiologyPV", "main.py"),
-        "mainHV": get_path("radiologyHV", "main.py")
-    }
+    "studiesHA": get_path(dir_path, "StudiesHA"),
+    "studiesPV": get_path(dir_path, "StudiesPV"),
+    "studiesHV": get_path(dir_path, "StudiesHV"),
+    "resultsHA": get_path(dir_path, "StudiesHA", "test_labels"),
+    "resultsPV": get_path(dir_path, "StudiesPV", "test_labels"),
+    "resultsHV": get_path(dir_path, "StudiesHV", "test_labels"),
+    "outputfolder": get_path(dir_path, "Output"),
+    "mainHA": get_path(dir_path, "radiologyHA", "main.py"),
+    "mainPV": get_path(dir_path, "radiologyPV", "main.py"),
+    "mainHV": get_path(dir_path, "radiologyHV", "main.py")
+}
+
 
     for key in ["mainHA", "mainPV", "mainHV"]:
         run_command(["python3", paths[key]])
