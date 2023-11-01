@@ -16,8 +16,8 @@ from typing import Dict
 
 import lib.configs
 from lib.activelearning import Last
-from lib.infers.deepgrow_pipeline import InferDeepgrowPipeline
-from lib.infers.vertebra_pipeline import InferVertebraPipeline
+# from lib.infers.deepgrow_pipeline import InferDeepgrowPipeline
+# from lib.infers.vertebra_pipeline import InferVertebraPipeline
 
 import monailabel
 from monailabel.interfaces.app import MONAILabelApp
