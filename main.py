@@ -1,47 +1,54 @@
 import os
+import subprocess
+import logging
 
-# find the directory of the current file and store it in a variable
+logging.basicConfig(level=logging.INFO)
 
-dir_path = os.path.dirname(os.path.realpath(__file__))
+def get_path(*args):
+    return os.path.join(dir_path, *args)
 
-studiesHA = dir_path + "/StudiesHA" 
-studiesPV = dir_path + "/StudiesPV"
-studiesHV = dir_path + "/StudiesHV"
+def run_command(command):
+    try:
+        result = subprocess.run(command, check=True, text=True, capture_output=True)
+        logging.info(result.stdout)
+    except subprocess.CalledProcessError as e:
+        logging.error(f"Command '{command}' failed with error: {e}")
 
-resultsHA = dir_path + "/StudiesHA/test_labels"
-resultsPV = dir_path + "/StudiesPV/test_labels"
-resultsHV = dir_path + "/StudiesHV/test_labels"
+def move_files(source, destination):
+    if os.path.exists(source):
+        run_command(["mv", source, destination])
 
-outputfolder = dir_path + "/Output"
+def main():
+    dir_path = os.path.dirname(os.path.realpath(__file__))
 
-mainHA = dir_path + "/radiologyHA/main.py"
-mainPV = dir_path + "/radiologyPV/main.py"
-mainHV = dir_path + "/radiologyHV/main.py"
+    paths = {
+        "studiesHA": get_path("StudiesHA"),
+        "studiesPV": get_path("StudiesPV"),
+        "studiesHV": get_path("StudiesHV"),
+        "resultsHA": get_path("StudiesHA", "test_labels"),
+        "resultsPV": get_path("StudiesPV", "test_labels"),
+        "resultsHV": get_path("StudiesHV", "test_labels"),
+        "outputfolder": get_path("Output"),
+        "mainHA": get_path("radiologyHA", "main.py"),
+        "mainPV": get_path("radiologyPV", "main.py"),
+        "mainHV": get_path("radiologyHV", "main.py")
+    }
 
-# run the three main files in sequence and wait for each to finish, also save the output in a log file while printing on the terminal
-os.system("python3 " + mainHA)
-os.system("python3 " + mainPV)
-os.system("python3 " + mainHV)
+    for key in ["mainHA", "mainPV", "mainHV"]:
+        run_command(["python3", paths[key]])
 
-# move only the contents of the three results folder to the output folder
-os.system("mv " + resultsHA + "/* " + outputfolder)
-os.system("mv " + resultsPV + "/* " + outputfolder)
-os.system("mv " + resultsHV + "/* " + outputfolder)
+    for key in ["resultsHA", "resultsPV", "resultsHV"]:
+        move_files(paths[key], paths["outputfolder"])
 
-# read the name of the files in the output folder and print them on the terminal
-files = os.listdir(outputfolder)
+    files = os.listdir(paths["outputfolder"])
+    for file in files:
+        logging.info(file)
+        run_command(["fslstats", os.path.join(paths["outputfolder"], file), "-V"])
 
-# print the volumes of files in the output folder using fslstats and print them on the terminal
-for file in files:
-    print(file)
-    os.system("fslstats " + outputfolder + "/" + file + " -V")
+    if subprocess.run(["which", "slicer"], capture_output=True).returncode == 0:
+        run_command(["slicer", paths["studiesHA"], paths["studiesPV"], paths["studiesHV"], paths["outputfolder"]])
+    else:
+        logging.warning("Slicer is not installed")
 
-# Check if slicer is installed on the computer using which slicer command
-# if slicer is installed then open both input files and output files in slicer using slicer command in the terminal 
-# else print that slicer is not installed
-if os.system("which slicer") == 0:
-    os.system("slicer " + studiesHA + "/* " + studiesPV + "/* " + studiesHV + "/* " + outputfolder + "/*")
-else:
-    print("Slicer is not installed")
-
-
+if __name__ == "__main__":
+    main()
