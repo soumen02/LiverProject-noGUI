@@ -1,0 +1,18 @@
+{
+  "name": "new-dataset",
+  "description": "New Dataset",
+  "images_dir": ".",
+  "labels_dir": "labels",
+  "objects": {
+    "10153545_HA-PVreg": {
+      "image": {
+        "ext": ".nii.gz",
+        "info": {
+          "ts": 1697107314,
+          "name": "10153545_HA-PVreg.nii.gz"
+        }
+      },
+      "labels": {}
+    }
+  }
+}

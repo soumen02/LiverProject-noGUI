@@ -1,0 +1,3 @@
+{'label_names': {'hv': 1}, 'latencies': {'pre': 4.2, 'infer': 0.88, 'invert': 0.01, 'post': 0.0, 'write': 0.13, 'total': 5.22, 'transform': {'pre': {'LoadImaged': 2.8499, 'EnsureTyped': 0.8499, 'EnsureChannelFirstd': 0.0003, 'Spacingd': 0.4939, 'ScaleIntensityRanged': 0.0005}, 'post': {'EnsureTyped': 0.0001, 'Activationsd': 0.0002, 'AsDiscreted': 0.0002, 'Restored': 0.0002}}}}
+++++ Image File: /home/mri/soumen_fall2023/LiverApp_noGUI/StudiesHV/10153545_HV-PVreg.nii.gz
+++++ Label File: /home/mri/soumen_fall2023/LiverApp_noGUI/StudiesHV/test_labels/10153545_HV-PVreg.nii.gz

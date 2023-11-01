@@ -1,0 +1,7 @@
+monai==1.2.0
+monailabel==0.7.0
+monailabel_weekly==0.5.dev2324
+numpy==1.23.5
+numpy==1.23.4
+torch==1.13.0
+tqdm==4.64.1
