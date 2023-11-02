@@ -6,4 +6,5 @@ StudiesHA/*.json
 StudiesHV/*.json
 StudiesPV/*.json
 cufile.log
+Output/*
 
