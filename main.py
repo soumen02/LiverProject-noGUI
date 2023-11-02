@@ -12,11 +12,19 @@ def get_path(dir_path, *args):
     return os.path.join(dir_path, *args)
 
 def run_command(command):
-    cmd_str = ' '.join(command)
-    exit_code = os.system(cmd_str)
-    if exit_code != 0:
-        logging.error(f"Command '{cmd_str}' failed with error code: {exit_code}")
-        exit(exit_code)
+    try:
+        with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) as proc:
+            stdout, stderr = proc.communicate()
+            if stdout:
+                logging.info(stdout)
+            if stderr:
+                logging.error(stderr)
+            if proc.returncode != 0:
+                logging.error(f"Command '{' '.join(command)}' failed with error code: {proc.returncode}")
+                exit(proc.returncode)
+    except Exception as e:
+        logging.error(f"Error executing command '{' '.join(command)}': {e}")
+        exit(1)
 
 def move_and_rename_files(source_path, output_path, prefix, file_suffix='.nii.gz'):
     for filename in os.listdir(source_path):
@@ -51,8 +59,8 @@ def main():
         else:
             move_and_rename_files(paths[key], paths["outputfolder"], 'label_')
     
-    for key in ["studiesHA", "studiesPV", "studiesHV"]:
-        move_and_rename_files(paths[key], paths["outputfolder"], 'volume_')
+    # for key in ["studiesHA", "studiesPV", "studiesHV"]:
+    #     move_and_rename_files(paths[key], paths["outputfolder"], 'volume_')
 
     # files = os.listdir(paths["outputfolder"])
     # for file in files:
